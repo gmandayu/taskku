@@ -1,4 +1,4 @@
-function IssueCard({ issue }) {
+function IssueCard({ issue, onDelete, onUpdateStatus }) {
 	return (
 		<div
 			style={{
@@ -10,9 +10,14 @@ function IssueCard({ issue }) {
 			}}>
 			<h3 style={{ margin: '0 0 8px 0' }}>{issue.title}</h3>
 
-			<p style={{ margin: '4px 0' }}>
-				<strong>Status:</strong> {issue.status}
-			</p>
+			<div style={{ marginBottom: '8px' }}>
+				<strong>Status:</strong>{' '}
+				<select value={issue.status} onChange={(e) => onUpdateStatus(issue.id, e.target.value)}>
+					<option value="todo">Todo</option>
+					<option value="in-progress">In Progress</option>
+					<option value="done">Done</option>
+				</select>
+			</div>
 
 			<p style={{ margin: '4px 0' }}>
 				<strong>Priority:</strong> {issue.priority}
@@ -21,6 +26,18 @@ function IssueCard({ issue }) {
 			<p style={{ margin: '4px 0' }}>
 				<strong>Assignee:</strong> {issue.assignee}
 			</p>
+
+			<button
+				onClick={() => onDelete(issue.id)}
+				style={{
+					marginTop: '10px',
+					padding: '6px 12px',
+					border: 'none',
+					borderRadius: '6px',
+					cursor: 'pointer',
+				}}>
+				Delete
+			</button>
 		</div>
 	);
 }

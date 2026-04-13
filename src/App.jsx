@@ -27,6 +27,14 @@ function App() {
 		setAssignee('');
 	};
 
+	const handleDeleteIssue = (id) => {
+		setIssues(issues.filter((issue) => issue.id !== id));
+	};
+
+	const handleUpdateStatus = (id, newStatus) => {
+		setIssues(issues.map((issue) => (issue.id === id ? { ...issue, status: newStatus } : issue)));
+	};
+
 	return (
 		<main
 			style={{
@@ -105,7 +113,7 @@ function App() {
 					</button>
 				</form>
 
-				<IssueList issues={issues} />
+				<IssueList issues={issues} onDeleteIssue={handleDeleteIssue} onUpdateStatus={handleUpdateStatus} />
 			</div>
 		</main>
 	);
