@@ -8,6 +8,10 @@ function App() {
 	const [priority, setPriority] = useState('medium');
 	const [assignee, setAssignee] = useState('');
 
+	const [filter, setFilter] = useState('all');
+
+	const filteredIssues = filter === 'all' ? issues : issues.filter((issue) => issue.status === filter);
+
 	const handleAddIssue = (e) => {
 		e.preventDefault();
 
@@ -112,8 +116,13 @@ function App() {
 						Add Issue
 					</button>
 				</form>
-
-				<IssueList issues={issues} onDeleteIssue={handleDeleteIssue} onUpdateStatus={handleUpdateStatus} />
+				<div style={{ marginBottom: '16px', display: 'flex', gap: '8px' }}>
+					<button onClick={() => setFilter('all')}>All</button>
+					<button onClick={() => setFilter('todo')}>Todo</button>
+					<button onClick={() => setFilter('in-progress')}>In Progress</button>
+					<button onClick={() => setFilter('done')}>Done</button>
+				</div>
+				<IssueList issues={filteredIssues} onDeleteIssue={handleDeleteIssue} onUpdateStatus={handleUpdateStatus} />
 			</div>
 		</main>
 	);
